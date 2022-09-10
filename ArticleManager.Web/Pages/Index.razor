@@ -6,3 +6,17 @@
 
 <p class="lead">Welcome! This app showcases the principles of Blazor.</p>
 <p>You can manage your articles along the way.</p>
+
+@if(showWidget){
+    <TimeWidget TimeInUTC="true" OnWidgetClose="WidgetClose" />
+}
+
+
+@code{
+    private bool showWidget = true;
+
+    private void WidgetClose(){
+        showWidget = false;
+        StateHasChanged();
+    }
+}

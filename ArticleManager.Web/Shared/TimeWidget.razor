@@ -1,0 +1,57 @@
+﻿
+<div class="timewidget card">
+    <div class="card-header">
+        <button type="button" class="btn-close" @onclick="e => OnWidgetClose.InvokeAsync()"></button>
+    </div>
+    <div class="card-body display-6">
+        @time
+    </div>
+    <div class="card-footer">
+        <input type="checkbox" class="form-check-input" id="utcSwitch"
+               @onchange="SwitchMode" checked="@TimeInUTC">
+        <label class="form-check-label" for="utcSwitch">
+            Time in UTC
+        </label>
+    </div>
+</div>
+
+
+@code
+{
+    private string time;
+    private Timer timer;
+
+    [Parameter]
+    public bool TimeInUTC { get; set; }
+
+    [Parameter]
+    public EventCallback OnWidgetClose { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(TimerTicked, null, 0, 1000);
+    }
+
+    private void TimerTicked(object _)
+    {
+        if (TimeInUTC)
+            time = DateTime.UtcNow.ToLongTimeString();
+        else
+            time = DateTime.Now.ToLongTimeString();
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void SwitchMode()
+    {
+        TimeInUTC = !TimeInUTC;
+
+        TimerTicked(null); //refresh time immediately
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

@@ -1,0 +1,12 @@
+﻿.timewidget {
+    display: inline-block;
+}
+
+    .timewidget .card-header {
+        text-align: right;
+    }
+
+    .timewidget .card-body {
+        text-align: center;
+        font-family: monospace;
+    }
