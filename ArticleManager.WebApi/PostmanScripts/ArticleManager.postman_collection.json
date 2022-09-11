@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "7a907a4a-dcba-469b-874e-4f9d2e298898",
+		"name": "ArticleManager",
+		"description": "Graduaat Programmeren\nProgramming Innovation\nBlazor: ArticleManager\n\nPostman collection for Web Api part",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15529466"
+	},
+	"item": [
+		{
+			"name": "Read Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5003/api/categories",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Articles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5003/api/articles",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Categorie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"name\": \"New category\",\n        \"description\": \"Added a new category\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/categories",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"title\": \"New article\",\n        \"content\": \"Added a new article\",\n        \"category\": {\n            \"id\": 1\n        }\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/articles",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Categorie",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"id\": 5,\n\t\t\"name\": \"New category - Updated\",\n        \"description\": \"Added a new category\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/categories/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"categories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Article",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"id\": 5,\n        \"title\": \"New article - updated\",\n        \"content\": \"Updated a new article\",\n        \"category\": {\n            \"id\": 1\n        }\n}\n"
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/articles/11",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"articles",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category with id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/categories/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"categories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Articlewith id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5003/api/articles/11",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"articles",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
