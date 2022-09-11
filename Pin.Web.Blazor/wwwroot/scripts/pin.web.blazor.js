@@ -1,5 +1,4 @@
-﻿
-window.showConfirmDelete = (id) => {
+﻿window.showConfirmDelete = (id) => {
     $('#' + id).modal('show');
 };
 window.hideConfirmDelete = (id) => {
