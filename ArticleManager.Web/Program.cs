@@ -1,3 +1,6 @@
+using ArticleManager.Web.Models;
+using ArticleManager.Web.Services;
+using ArticleManager.Web.Services.Mocks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -11,7 +14,8 @@ namespace ArticleManager.Web
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor();
+            builder.Services.AddServerSideBlazor(); 
+            builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
 
             var app = builder.Build();
 
