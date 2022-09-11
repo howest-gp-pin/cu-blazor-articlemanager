@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleManager.WebApi", "Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleManager.Shared", "ArticleManager.Shared\ArticleManager.Shared.csproj", "{0E78219B-1ED7-4F40-80B1-CEAE7FE57FB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pin.Web.Blazor", "Pin.Web.Blazor\Pin.Web.Blazor.csproj", "{CCEA2132-4DA6-4B3D-ABFE-B5BBF4E61DE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pin.Web.Blazor", "Pin.Web.Blazor\Pin.Web.Blazor.csproj", "{CCEA2132-4DA6-4B3D-ABFE-B5BBF4E61DE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
