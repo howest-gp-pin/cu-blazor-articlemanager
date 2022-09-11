@@ -1,4 +1,7 @@
 using ArticleManager.Web;
+using ArticleManager.Web.Models;
+using ArticleManager.Web.Services;
+using ArticleManager.Web.Services.Mocks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -13,6 +16,7 @@ namespace ArticleManager.Web
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
 
             await builder.Build().RunAsync();
         }
