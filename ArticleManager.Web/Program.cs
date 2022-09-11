@@ -17,6 +17,7 @@ namespace ArticleManager.Web
             builder.Services.AddServerSideBlazor(); 
             builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
             builder.Services.AddTransient<ICRUDService<Article>, FakeArticleService>();
+            builder.Services.AddScoped<HttpClient>();
 
             var app = builder.Build();
 
