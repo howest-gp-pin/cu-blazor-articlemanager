@@ -15,8 +15,8 @@ namespace ArticleManager.Web
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
-            builder.Services.AddTransient<ICRUDService<Article>, FakeArticleService>();
+            builder.Services.AddTransient<ICRUDService<Category>, CategoriesApiService>();
+            builder.Services.AddTransient<ICRUDService<Article>, ArticlesApiService>();
             builder.Services.AddSingleton<HttpClient>();
 
             await builder.Build().RunAsync();
