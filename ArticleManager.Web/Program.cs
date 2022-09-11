@@ -15,8 +15,8 @@ namespace ArticleManager.Web
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor(); 
-            builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
-            builder.Services.AddTransient<ICRUDService<Article>, FakeArticleService>();
+            builder.Services.AddTransient<ICRUDService<Category>, CategoriesApiService>();
+            builder.Services.AddTransient<ICRUDService<Article>, ArticlesApiService>();
             builder.Services.AddScoped<HttpClient>();
 
             var app = builder.Build();
