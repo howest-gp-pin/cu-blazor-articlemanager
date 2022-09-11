@@ -9,7 +9,7 @@
         </div>
     }
 
-    @if (currentArticle == null)
+    @if (currentArticle.Item == null)
     {
         <ItemList TItem="Article"
                 Model="listModel"
@@ -20,12 +20,34 @@
     }
     else
     {
-        <ArticleForm 
-                    Article="currentArticle"
-                    AvailableCategories="availableCategories"
-                    OnSave="SaveArticle"
-                    OnCancel="RefreshArticles">
-        </ArticleForm>
+        <ItemDetails TItem="Article"
+                Model="currentArticle"
+                OnSave="SaveArticle"
+                OnCancel="RefreshArticles">
+            <FieldsTemplate Context="Article">
+                <div class="form-group">
+                    <label for="category">Category: </label>
+                    <InputSelect id="category" TValue="int" @bind-Value="Article.CategoryId" class="form-control">
+                        @foreach (var category in availableCategories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => Article.CategoryId)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Title: </label>
+                    <InputText id="name" @bind-Value="Article.Title" class="form-control" />
+                    <ValidationMessage For="@(() => Article.Title)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Content: </label>
+                    <InputTextArea id="content" @bind-Value="Article.Content" class="form-control" />
+                </div>
+            </FieldsTemplate>
+        </ItemDetails>
     }
 </div>
 
