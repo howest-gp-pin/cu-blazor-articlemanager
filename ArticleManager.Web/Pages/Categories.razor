@@ -12,7 +12,7 @@
         </div>
     }
 
-    @if (currentCategory == null)
+    @if (currentCategory.Item == null)
     {
         <ItemList TItem="Category"
                 Model="listModel"
@@ -23,10 +23,25 @@
     }
     else
     {
-        <CategoryForm Category="currentCategory"
-                        OnSave="SaveCategory"
-                        OnCancel="RefreshCategories">
-        </CategoryForm>
+        <ItemDetails TItem="Category"
+                    Model="currentCategory"
+                    OnSave="SaveCategory"
+                    OnCancel="RefreshCategories">
+            <FieldsTemplate Context="category">
+                <div class="form-group">
+                    <label for="name">Name: </label>
+                    <InputText id="name" class="form-control"
+                            @bind-Value="category.Name" />
+                    <ValidationMessage For="@(() => category.Name)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description: </label>
+                    <InputTextArea id="description" class="form-control"
+                               @bind-Value="category.Description" />
+                </div>
+            </FieldsTemplate>
+        </ItemDetails>
     }
 </div>
 
@@ -38,7 +53,11 @@
             Items = new Category[0]
     };
 
-    private Category currentCategory;
+    private ItemDetailsModel<Category> currentCategory = new ItemDetailsModel<Category>
+    {
+        ItemName = "Category"
+    };
+
     private string error;
 
     protected override async Task OnInitializedAsync()
@@ -49,27 +68,27 @@
     public async Task RefreshCategories()
     {
         listModel.Items = (await service.GetAll()).ToArray();
-        this.currentCategory = null;
+        this.currentCategory.Item = null;
     }
 
     public void AddCategory()
     {
-        this.currentCategory = new Category();
+        this.currentCategory.Item = new Category();
     }
 
     public async Task EditCategory(Category item)
     {
-        this.currentCategory = await service.Get(item.Id);
+        this.currentCategory.Item = await service.Get(item.Id);
     }
 
     public async Task SaveCategory(Category item)
     {
         try
         {
-            if (currentCategory.Id == 0)
-                await service.Create(currentCategory);
+            if (currentCategory.Item.Id == 0)
+                await service.Create(currentCategory.Item);
             else
-                await service.Update(currentCategory);
+                await service.Update(currentCategory.Item);
 
             await this.RefreshCategories();
         }

@@ -5,78 +5,82 @@ using Pin.Web.Blazor.Models;
 
 namespace ArticleManager.Web.Pages
 {
-    public partial class Articles
+public partial class Articles
+{
+    [Inject]
+    private ICRUDService<Article> articleService { get; set; }
+    [Inject]
+    private ICRUDService<Category> categoryService { get; set; }
+
+    private ItemListModel<Article> listModel = new ItemListModel<Article>
     {
-        [Inject]
-        private ICRUDService<Article> articleService { get; set; }
-        [Inject]
-        private ICRUDService<Category> categoryService { get; set; }
+        ItemName = "Article",
+        Headers = new[] { nameof(Article.Id), nameof(Article.Title), nameof(Article.CategoryName) },
+        Items = new Article[0]
+    };
 
-        private ItemListModel<Article> listModel = new ItemListModel<Article>
+    private ItemDetailsModel<Article> currentArticle = new ItemDetailsModel<Article>
+    {
+        ItemName = "Article"
+    };
+
+    private Category[] availableCategories = new Category[0];
+    private string error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshArticles();
+    }
+
+    public async Task RefreshArticles()
+    {
+        listModel.Items = (await articleService.GetAll()).ToArray();
+        this.currentArticle.Item = null;
+    }
+
+    public async Task AddArticle()
+    {
+        this.availableCategories = (await categoryService.GetAll()).ToArray();
+        this.currentArticle.Item = new Article();
+    }
+
+    public async Task EditArticle(Article item)
+    {
+        this.availableCategories = (await categoryService.GetAll()).ToArray();
+        this.currentArticle.Item = await articleService.Get(item.Id);
+    }
+
+    public async Task SaveArticle(Article item)
+    {
+        try
         {
-            ItemName = "Article",
-            Headers = new[] { nameof(Article.Id), nameof(Article.Title), nameof(Article.CategoryName) },
-            Items = new Article[0]
-        };
-
-        private Article currentArticle;
-        private Category[] availableCategories = new Category[0];
-        private string error;
-
-        protected override async Task OnInitializedAsync()
-        {
-            await RefreshArticles();
-        }
-
-        public async Task RefreshArticles()
-        {
-            listModel.Items = (await articleService.GetAll()).ToArray();
-            this.currentArticle = null;
-        }
-
-        public async Task AddArticle()
-        {
-            this.availableCategories = (await categoryService.GetAll()).ToArray();
-            this.currentArticle = new Article();
-        }
-
-        public async Task EditArticle(Article item)
-        {
-            this.availableCategories = (await categoryService.GetAll()).ToArray();
-            this.currentArticle = await articleService.Get(item.Id);
-        }
-
-        public async Task SaveArticle(Article item)
-        {
-            try
+            if (currentArticle.Item.Id == 0)
             {
-                if (currentArticle.Id == 0)
-                {
-                    await articleService.Create(currentArticle);
-                }
-                else
-                {
-                    await articleService.Update(currentArticle);
-                }
-                await this.RefreshArticles();
+                await articleService.Create(currentArticle.Item);
             }
-            catch (Exception ex)
+            else
             {
-                this.error = ex.Message;
+                await articleService.Update(currentArticle.Item);
             }
+            await this.RefreshArticles();
         }
-
-        public async Task DeleteArticle(Article item)
+        catch (Exception ex)
         {
-            try
-            {
-                await articleService.Delete(item.Id);
-                await this.RefreshArticles();
-            }
-            catch (Exception ex)
-            {
-                this.error = ex.Message;
-            }
+            this.error = ex.Message;
         }
     }
+
+    public async Task DeleteArticle(Article item)
+    {
+        try
+        {
+            await articleService.Delete(item.Id);
+            await this.RefreshArticles();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}
 }

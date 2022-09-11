@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\scripts\" />
+    <Folder Include="Components\" />
   </ItemGroup>
 
 </Project>
