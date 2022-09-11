@@ -32,8 +32,8 @@
 
 @code {
     private Article currentArticle;
-    private Article[] articles;
-    private Category[] availableCategories;
+    private Article[] articles = new Article[0];
+    private Category[] availableCategories = new Category[0];
     private string error;
 
     protected override async Task OnInitializedAsync()
