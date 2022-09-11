@@ -17,6 +17,7 @@ namespace ArticleManager.Web
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<ICRUDService<Category>, FakeCategoryService>();
+            builder.Services.AddTransient<ICRUDService<Article>, FakeArticleService>();
 
             await builder.Build().RunAsync();
         }
