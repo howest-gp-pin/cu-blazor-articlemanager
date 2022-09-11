@@ -1,6 +1,7 @@
 using ArticleManager.WebApi.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace ArticleManager.WebApi
 {
@@ -20,12 +21,28 @@ namespace ArticleManager.WebApi
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
 
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArticleManager API", Version = "v1" });
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+
+                // Enable middleware to serve generated Swagger as a JSON endpoint. 
+                app.UseSwagger();
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+                // specifying the Swagger JSON endpoint. 
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ArticleManager API");
+                    c.RoutePrefix = string.Empty;
+                });
             }
             else
             {
