@@ -1,7 +1,94 @@
 ﻿@page "/articles"
+@inject ICRUDService<Article> articleService;
+@inject ICRUDService<Category> categoryService;
 
-<h3>Articles</h3>
+<h2>Article</h2>
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    @if (currentArticle == null)
+    {
+        <ArticleList Items="articles"
+                     OnAdd="AddArticle"
+                     OnEdit="EditArticle"
+                     OnDelete="DeleteArticle">
+        </ArticleList>
+    }
+    else
+    {
+        <ArticleForm 
+                 Article="currentArticle"
+                 AvailableCategories="availableCategories"
+                 OnSave="SaveArticle"
+                 OnCancel="RefreshArticles">
+        </ArticleForm>
+    }
+</div>
 
 @code {
+    private Article currentArticle;
+    private Article[] articles;
+    private Category[] availableCategories = new Category[0];
+    private string error;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshArticles();
+    }
+
+    public async Task RefreshArticles()
+    {
+        articles = (await articleService.GetAll()).ToArray();
+        this.currentArticle = null;
+    }
+
+    public async Task AddArticle()
+    {
+        this.availableCategories = (await categoryService.GetAll()).ToArray();
+        this.currentArticle = new Article();
+    }
+
+    public async Task EditArticle(Article item)
+    {
+        this.availableCategories = (await categoryService.GetAll()).ToArray();
+        this.currentArticle = await articleService.Get(item.Id);
+    }
+
+    public async Task SaveArticle(Article item)
+    {
+        try
+        {
+            if (currentArticle.Id == 0)
+            {
+                await articleService.Create(currentArticle);
+            }
+            else
+            {
+                await articleService.Update(currentArticle);
+            }
+            await this.RefreshArticles();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteArticle(Article item)
+    {
+        try
+        {
+            await articleService.Delete(item.Id);
+            await this.RefreshArticles();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
 }
