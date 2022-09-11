@@ -13,6 +13,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArticleManager.Shared\ArticleManager.Shared.csproj" />
+    <ProjectReference Include="..\Pin.Web.Blazor\Pin.Web.Blazor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\scripts\" />
   </ItemGroup>
 
 </Project>

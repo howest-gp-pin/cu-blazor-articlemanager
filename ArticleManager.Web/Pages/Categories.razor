@@ -14,23 +14,30 @@
 
     @if (currentCategory == null)
     {
-        <CategoryList Items="categories"
-                      OnAdd="AddCategory"
-                      OnEdit="EditCategory"
-                      OnDelete="DeleteCategory">
-        </CategoryList>
+        <ItemList TItem="Category"
+                Model="listModel"
+                OnAdd="AddCategory"
+                OnEdit="EditCategory"
+                OnDelete="DeleteCategory">
+        </ItemList>
     }
     else
     {
         <CategoryForm Category="currentCategory"
-                      OnSave="SaveCategory"
-                      OnCancel="RefreshCategories">
+                        OnSave="SaveCategory"
+                        OnCancel="RefreshCategories">
         </CategoryForm>
     }
 </div>
 
 @code {
-    private Category[] categories = new Category[0];
+    private ItemListModel<Category> listModel = new ItemListModel<Category> 
+    {
+            ItemName = "Category",
+            Headers = new[] { nameof(Category.Id), nameof(Category.Name) },
+            Items = new Category[0]
+    };
+
     private Category currentCategory;
     private string error;
 
@@ -41,7 +48,7 @@
 
     public async Task RefreshCategories()
     {
-        categories = (await service.GetAll()).ToArray();
+        listModel.Items = (await service.GetAll()).ToArray();
         this.currentCategory = null;
     }
 

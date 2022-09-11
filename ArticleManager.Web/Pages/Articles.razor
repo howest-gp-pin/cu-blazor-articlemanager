@@ -11,19 +11,20 @@
 
     @if (currentArticle == null)
     {
-        <ArticleList Items="articles"
-                     OnAdd="AddArticle"
-                     OnEdit="EditArticle"
-                     OnDelete="DeleteArticle">
-        </ArticleList>
+        <ItemList TItem="Article"
+                Model="listModel"
+                OnAdd="AddArticle"
+                OnEdit="EditArticle"
+                OnDelete="DeleteArticle">
+        </ItemList>
     }
     else
     {
         <ArticleForm 
-                 Article="currentArticle"
-                 AvailableCategories="availableCategories"
-                 OnSave="SaveArticle"
-                 OnCancel="RefreshArticles">
+                    Article="currentArticle"
+                    AvailableCategories="availableCategories"
+                    OnSave="SaveArticle"
+                    OnCancel="RefreshArticles">
         </ArticleForm>
     }
 </div>

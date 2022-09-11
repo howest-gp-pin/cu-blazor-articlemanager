@@ -1,6 +1,7 @@
 ﻿using ArticleManager.Web.Models;
 using ArticleManager.Web.Services;
 using Microsoft.AspNetCore.Components;
+using Pin.Web.Blazor.Models;
 
 namespace ArticleManager.Web.Pages
 {
@@ -11,8 +12,14 @@ namespace ArticleManager.Web.Pages
         [Inject]
         private ICRUDService<Category> categoryService { get; set; }
 
+        private ItemListModel<Article> listModel = new ItemListModel<Article>
+        {
+            ItemName = "Article",
+            Headers = new[] { nameof(Article.Id), nameof(Article.Title), nameof(Article.CategoryName) },
+            Items = new Article[0]
+        };
+
         private Article currentArticle;
-        private Article[] articles = new Article[0];
         private Category[] availableCategories = new Category[0];
         private string error;
 
@@ -23,7 +30,7 @@ namespace ArticleManager.Web.Pages
 
         public async Task RefreshArticles()
         {
-            articles = (await articleService.GetAll()).ToArray();
+            listModel.Items = (await articleService.GetAll()).ToArray();
             this.currentArticle = null;
         }
 
