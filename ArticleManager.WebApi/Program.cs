@@ -54,6 +54,8 @@ namespace ArticleManager.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseRouting();
 
             app.UseAuthentication();
