@@ -15,7 +15,7 @@ public partial class Articles
     private ItemListModel<Article> listModel = new ItemListModel<Article>
     {
         ItemName = "Article",
-        Headers = new[] { nameof(Article.Id), nameof(Article.Title), nameof(Article.CategoryName) },
+        Headers = new[] { nameof(Article.Id), nameof(Article.Title),nameof(Article.CategoryId), nameof(Article.CategoryName), nameof(Article.Content) },
         Items = new Article[0]
     };
 
